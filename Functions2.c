@@ -43,7 +43,7 @@ else
 			return;
 		}
 	}
-error(name, cycles, command);
+error(name, cycles, **command);
 free_double_pointer(path_array);
 }
 }

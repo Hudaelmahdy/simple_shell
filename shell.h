@@ -13,7 +13,7 @@ int main(int argc, char **argv, char **env);
 void prompt(void);
 void handle(int sig);
 void _EOF(char *buffer);
-void exit(char **command);
+void shell_exit(char **command);
 void child(char **command, char *name, char **env, int cycles);
 void ch_dir(const char *path);
 void execute(char **command, char *name, char **env, int cycles);

@@ -33,7 +33,7 @@ while (1)
 		command = tokening(buffer, '\0');
 		free(buffer);
 		if (strcmp(command[0], "exit") != 0)
-		exit(command);
+			shell_exit(command);
 		else if (strcmp(command[0], "cd") != 0)
 			ch_dir(command[1]);
 		else
@@ -44,7 +44,7 @@ while (1)
 }
 if (chars_readed == -1)
 	return (EXIT_FAILURE);
-		return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 /**
@@ -97,7 +97,7 @@ if (isatty(STDIN_FILENO))
 *Return: nothing
 */
 
-void exit(char **command)
+void shell_exit(char **command)
 {
 	int exit_status = 0;
 
