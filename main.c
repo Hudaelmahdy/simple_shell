@@ -44,7 +44,7 @@ while (1)
 }
 if (chars_readed == -1)
 	return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+return (EXIT_SUCCESS);
 }
 
 /**
@@ -86,9 +86,10 @@ void _EOF(char *buffer)
 
 if (isatty(STDIN_FILENO))
 {
-	write(STDOUT_FILENO, '\n', 1);
-	free(buffer);
-	exit(EXIT_SUCCESS);
+	write(STDOUT_FILENO, "\n", 1);
+}
+free(buffer);
+exit(EXIT_SUCCESS);
 }
 
 /**
@@ -102,8 +103,10 @@ void shell_exit(char **command)
 	int exit_status = 0;
 
 if (command[1] == NULL)
+{
 	free_double_pointer(command);
 	exit(EXIT_SUCCESS);
+}
 exit_status = _atoi(command[1]);
 free_double_pointer(command);
 exit(exit_status);
