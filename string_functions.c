@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * strlen - function to print the length of the string
+ * str_len - function to print the length of the string
  * @str: input string
  * Return: length of the string
 */
@@ -17,7 +17,7 @@ unsigned int str_len(char *str)
 
 
 /**
- * strcmp - function to compare two strings
+ * str_cmp - function to compare two strings
  * @str1: first string
  * @str2: second string
  * Return: 1 in same string, 0 if not
@@ -28,14 +28,17 @@ int str_cmp(char *str1, char *str2)
 		unsigned int i = 0;
 
 		while (str1[i])
+		{
 			if (str1[i] != str2[i])
 				return (0);
 			i++;
+		}
 		return (1);
+
 }
 
 /**
- * strcpy - function to copy string to another
+ * str_cpy - function to copy string to another
  * @dest: pointer for copied string
  * @src: pointer for string copy for
  * Return: copied string
@@ -53,7 +56,7 @@ char *str_cpy(char *dest, char *src)
 
 
 /**
- * strcat - function that concatenates two strings
+ * str_cat - function that concatenates two strings
  * @dest: input string
  * @src: input string
  * Return: result string pointer
@@ -87,16 +90,21 @@ int _atoi(char *str)
 		if (str == NULL)
 			return (0);
 		while (*str)
+		{
 			if (*str == '-')
 				sign *= -1;
 			if (*str >= '0' && *str <= '9')
+			{
 				null = 1;
 				total = total * 10 + (*str - '0');
+			}
 			else if (*str < '0' || *str > '9')
 				if (null == 1)
 					break;
 			str++;
 		if (sign < 0)
 			total = (-1 * (total));
-		return (total);
+		}
+	return (total);
 }
+
