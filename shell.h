@@ -26,7 +26,7 @@ void free_exit(char **command);
 int str_cmp(char *str1, char *str2);
 unsigned int str_len(char *str);
 char *str_cpy(char *dest, char *src);
-char *str_cat(char *dest, char src);
+char *str_cat(char *dest, char *src);
 int _atoi(char *str);
 
 #endif
