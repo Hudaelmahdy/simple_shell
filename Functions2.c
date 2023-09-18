@@ -43,7 +43,7 @@ void execute(char **command, char *name, char **env, int cycles)
 				return;
 			}
 		}
-		error(name, cycles, **command);
+		error(name, cycles, command);
 		free_double_pointer(path_array);
 	}
 }
@@ -60,7 +60,7 @@ void print_env(char **env)
 
 	while (env[i])
 	{
-		len = strlen(env[i]);
+		len = str_len(env[i]);
 		write(STDOUT_FILENO, env[i], len);
 		write(STDOUT_FILENO, "\n", 1);
 		i++;
@@ -101,7 +101,7 @@ char **_getpath(char **env)
  *Return: nothing
  */
 
-void error(char *name, char **command, int cycles)
+void error(char *name, int cycles, char **command)
 {
 	char c;
 

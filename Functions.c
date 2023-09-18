@@ -88,12 +88,12 @@ else
 }
 
 /**
-*Ch_dir - function to change working directory
+*ch_dir - function to change working directory
 *@path: new dir
 *Return: 0 on sucess, -1 on failure
 */
 
-int Ch_dir(const char *path)
+int ch_dir(const char *path)
 {
 	char *buf = NULL;
 	size_t size = 1024;
@@ -103,7 +103,7 @@ path = getcwd(buf, size);
 if (chdir(path) == -1)
 {
 	perror(path);
-	return (-1);
+	return (98);
 }
-return (0);
+return (1);
 }

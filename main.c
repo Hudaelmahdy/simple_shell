@@ -35,7 +35,7 @@ while (1)
 		if (strcmp(command[0], "exit") != 0)
 			shell_exit(command);
 		else if (strcmp(command[0], "cd") != 0)
-			ch_dir(command[1]);
+			Ch_dir(command[1]);
 		else
 				child(command, argv[0], env, cycles);
 	}
@@ -93,7 +93,7 @@ exit(EXIT_SUCCESS);
 }
 
 /**
-*exit - function to exit shell
+*shell_exit - function to exit shell
 *@command: pointer to command
 *Return: nothing
 */
