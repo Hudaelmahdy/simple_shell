@@ -37,7 +37,7 @@ while (1)
 		else if (strcmp(command[0], "cd") != 0)
 			ch_dir(command[1]);
 		else
-				chlid(command, argv[0], env, cycles);
+				child(command, argv[0], env, cycles);
 	}
 	fflush(stdin);
 	buffer = NULL, buf_size = 0;
@@ -85,6 +85,7 @@ void _EOF(char *buffer)
 	}
 
 if (isatty(STDIN_FILENO))
+{
 	write(STDOUT_FILENO, '\n', 1);
 	free(buffer);
 	exit(EXIT_SUCCESS);
@@ -101,11 +102,8 @@ void exit(char **command)
 	int exit_status = 0;
 
 if (command[1] == NULL)
-{
 	free_double_pointer(command);
 	exit(EXIT_SUCCESS);
-}
-
 exit_status = _atoi(command[1]);
 free_double_pointer(command);
 exit(exit_status);

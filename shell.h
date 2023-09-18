@@ -23,10 +23,10 @@ void error(char *name, char **command, int cycles);
 char **tokening(char *buffer, const char *str);
 void free_double_pointer(char **command);
 void free_exit(char **command);
-int strcmp(char *str1, char *str2);
-unsigned int strlen(char *str);
-char *strcpy(char *dest, char *src);
-char *strcat(char *dest, char src);
+int str_cmp(char *str1, char *str2);
+unsigned int str_len(char *str);
+char *str_cpy(char *dest, char *src);
+char *str_cat(char *dest, char src);
 int _atoi(char *str);
 
 #endif

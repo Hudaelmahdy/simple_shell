@@ -15,7 +15,7 @@ void execute(char **command, char *name, char **env, int cycles)
 	struct stat st;
 	unsigned int i = 0;
 
-if (strcmp(command[0], "env") != 0)
+if (str_cmp(command[0], "env") != 0)
 print_env(env);
 if (stat(command[0], &st) == 0)
 {
@@ -30,7 +30,7 @@ else
 	path_array = _getpath(env);
 	while (path_array[i])
 	{
-		absolute_path = strcat(path_array[i], command[0]);
+		absolute_path = str_cat(path_array[i], command[0]);
 		i++;
 		if (stat(absolute_path, &st) == 0)
 		{
@@ -61,7 +61,7 @@ void print_env(char **env)
 
 while (env[i])
 {
-	len = strlen(env[i]);
+	length = strlen(env[i]);
 	write(STDOUT_FILENO, env[i], len);
 	write(STDOUT_FILENO, "\n", 1);
 	i++;
@@ -82,7 +82,7 @@ char **_getpath(char **env)
 path_value = strtok(env[i], "=");
 while (env[i])
 {
-	if (strcmp(path_value, "PATH"))
+	if (str_cmp(path_value, "PATH"))
 	{
 		path_value = strtok(NULL, "\n");
 		path_array = tokening(path_value, ":");

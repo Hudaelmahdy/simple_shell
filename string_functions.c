@@ -6,7 +6,7 @@
  * Return: length of the string
 */
 
-unsigned int strlen(char *str)
+unsigned int str_len(char *str)
 {
 		unsigned int length = 0;
 
@@ -23,7 +23,7 @@ unsigned int strlen(char *str)
  * Return: 1 in same string, 0 if not
 */
 
-int strcmp(char *str1, char *str2)
+int str_cmp(char *str1, char *str2)
 {
 		unsigned int i = 0;
 
@@ -41,7 +41,7 @@ int strcmp(char *str1, char *str2)
  * Return: copied string
 */
 
-char *strcpy(char *dest, char *src)
+char *str_cpy(char *dest, char *src)
 {
 		char *init_dest = dest;
 
@@ -59,7 +59,7 @@ char *strcpy(char *dest, char *src)
  * Return: result string pointer
 */
 
-char *strcat(char *dest, char  *src)
+char *str_cat(char *dest, char  *src)
 {
 		char *original_dest = dest;
 
@@ -84,7 +84,7 @@ int _atoi(char *str)
 		unsigned int total = 0;
 		char null = 0;
 
-		if (s == NULL)
+		if (str == NULL)
 			return (0);
 		while (*str)
 			if (*str == '-')
