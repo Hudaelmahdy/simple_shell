@@ -93,7 +93,7 @@ else
 *Return: 0 on sucess, -1 on failure
 */
 
-int ch_dir(const char *path)
+int Ch_dir(const char *path)
 {
 	char *buf = NULL;
 	size_t size = 1024;
