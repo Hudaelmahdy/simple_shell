@@ -88,7 +88,7 @@ else
 }
 
 /**
-*ch_dir - function to change working directory
+*Ch_dir - function to change working directory
 *@path: new dir
 *Return: 0 on sucess, -1 on failure
 */
