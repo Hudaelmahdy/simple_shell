@@ -54,7 +54,7 @@ exit(EXIT_FAILURE);
 *Return: nothing
 */
 
-void child(char **command, char *name, char **env, int cycles)
+int child(char **command, char *name, char **env, int cycles)
 {
 	int pid = 0;
 	int status = 0;
@@ -84,6 +84,7 @@ else
 		free_double_pointer(command);
 	}
 }
+return (WEXITSTATUS(status));
 }
 
 /**
