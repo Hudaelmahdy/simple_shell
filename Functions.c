@@ -11,16 +11,13 @@ void free_double_pointer(char **command)
 	size_t i = 0;
 
 if (command == NULL)
-return;
+	return;
 
 while (command[i])
 {
 	free(command[i]);
 	i++;
 }
-
-if (command[i] == NULL)
-free(command[i]);
 free(command);
 }
 
@@ -43,8 +40,6 @@ while (command[i])
 	free(command[i]);
 	i++;
 }
-if (command[i] == NULL)
-free(command[i]);
 free(command);
 exit(EXIT_FAILURE);
 }
@@ -75,6 +70,7 @@ else if (pid == 0)
 {
 	execute(command, name, env, cycles);
 	free_double_pointer(command);
+	exit(EXIT_SUCCESS);
 }
 else
 	{
@@ -83,8 +79,11 @@ else
 	{
 		free_exit(command);
 	}
-	free_double_pointer(command);
+	else
+	{
+		free_double_pointer(command);
 	}
+}
 }
 
 /**
@@ -97,13 +96,27 @@ int Ch_dir(const char *path)
 {
 	char *buf = NULL;
 	size_t size = 1024;
+	int ispathAllocated = 0;
 
 if (path == NULL)
-path = getcwd(buf, size);
+{
+	buf = getcwd(buf, size);
+	if (buf == NULL)
+	{
+		perror("getcwd");
+		return (98);
+	}
+	path = buf;
+	ispathAllocated = 1;
+}
 if (chdir(path) == -1)
 {
 	perror(path);
+	if (ispathAllocated)
+		free(buf);
 	return (98);
 }
+if (ispathAllocated)
+	free(buf);
 return (1);
 }
