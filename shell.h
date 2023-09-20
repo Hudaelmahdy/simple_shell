@@ -37,7 +37,7 @@ typedef struct ls_path
 
 
 char *get_env(const char *envName);
-ls_path *puch_node(ls_path **firstNode, char *dirpath);
+ls_path *puch_node(ls_path **firstNode, char *str);
 ls_path *pathlink(char *pathstr);
 char *_which(char *fileName, ls_path *firstNode);
 
