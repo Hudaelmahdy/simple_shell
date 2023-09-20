@@ -19,7 +19,7 @@ char *user_command(void);
 void get_env(char **envp);
 char **get_token(char *string);
 void exit_shell(char **args, char *string, int _exit);
-void *str_tok(char *str, const char *separator);
+char *_strtok(char *str, const char *separator);
 int fork_function(char **args, char **argv, char **envp,
 char *string, int nproc, int cnt);
 
