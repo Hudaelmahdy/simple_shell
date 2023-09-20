@@ -1,139 +1,85 @@
 #include "shell.h"
 
 /**
- * tokenizeString - function to split and create full string command
- * @separator: delimiter.
- * @str: splited string.
- * Return: string with full command.
+ * get_token - function to get token of string
+ * @string: command user.
+ * Return: pointer
 */
 
-char **tokenizeString(char *str, const char *separator)
+char **get_token(char *string)
 {
-	int index, C;
-	char **tArray;
-	char *token;
-	char *cpstring;
-	char **envarray = NULL;
+	char **user_command = NULL;
+	char *token = NULL;
+	size_t i = 0;
+	int size = 0;
 
-	cpstring = malloc(_strlen(str) + 1);
-	if (cpstring == NULL)
+	if (string == NULL)
 	{
-		perror(get_env("_", envarray));
 		return (NULL);
 	}
-	index = 0;
-	while (str[index])
+	for (i = 0; string[i]; i++)
 	{
-		cpstring[index] = str[index];
-		index++;
+		if (string[i] == ' ')
+		{
+			size++;
+		}
 	}
-	cpstring[index] = '\0';
-	token = strtok(cpstring, separator);
-	tArray = malloc((sizeof(char *) * 2));
-	tArray[0] = _strdup(token);
-	index = 1;
-	C = 3;
-	while (token)
+	if ((size + 1) == str_len(string))
 	{
-		token = strtok(NULL, separator);
-		tArray = re_alloc(tArray, (sizeof(char *) * (C - 1)), (sizeof(char *) * C));
-		tArray[index] = _strdup(token);
-		index++;
-		C++;
+		return (NULL);
 	}
-	free(cpstring);
-	return (tArray);
+	user_command = malloc(sizeof(char *) * (size + 2));
+	if (user_command == NULL)
+	{
+		return (NULL);
+	}
+	token = _strtok(string, " \n\t\r");
+	for (i = 0; token != NULL; i++)
+	{
+		user_command[i] = token;
+		token = _strtok(NULL, " \n\t\r");
+	}
+	user_command[i] = NULL;
+	return (user_command);
 }
 
 /**
- * execute - to executs the commands
- * @args: arguments array
+ * fork_function - creates a fork
+ * @argv: value path and command
+ * @args: name of program
+ * @envarray: environment
+ * @string: command line
+ * @nproc: id of proccess
+ * @cnt: check new test
+ * Return: 0
 */
-void execute(char **args, char **envarray)
+int fork_function(char **argv, char **args, char **envarray,
+char *string, int nproc, int cnt)
 {
-	int pid, exitStatus;
+	pid_t child;
+	int status;
+	char *form = "%s: %d: %s: not found\n";
 
-	if (!args || !args[0])
+	if (child == 0)
 	{
-		return;
-	}
-	pid = fork();
-	if (pid == -1)
-	{
-		perror(get_env("_", envarray));
-	}
-	if (pid == 0)
-	{
-		execve(args[0], args, envarray);
-			perror(args[0]);
-		exit(EXIT_FAILURE);
-	}
-	wait(&exitStatus);
-}
-
-
-/**
- * re_alloc - function that is reallocating memory
- * @oldmem: previous pointer
- * @currsize: the previous size of previous pointer
- * @reqsize: the newest size of pointer
- * Return: reqsize.
-*/
-
-void *re_alloc(void *oldmem, unsigned int currsize, unsigned int reqsize)
-{
-	char *required;
-	char *current;
-	unsigned int i;
-
-	if (oldmem == NULL)
-		return (malloc(reqsize));
-	if (reqsize == currsize)
-		return (oldmem);
-	if (reqsize == 0 && oldmem != NULL)
-	{
-		free(oldmem);
-		return (NULL);
-	}
-	required = malloc(reqsize);
-	current = oldmem;
-	if (required == NULL)
-		return (NULL);
-	if (reqsize > currsize)
-	{
-		for (i = 0; i < currsize; i++)
+		if (execv(argv[0], argv, envarray) == -1)
 		{
-			required[i] = current[i];
-		}
-		free(oldmem);
-		for (i = currsize; i < reqsize; i++)
-		{
-			required[i] = '\0';
+			fprintf(stderr, form, args[0], nproc, argv[0]);
+			if (!cnt)
+			{
+				free(argv);
+				free(string);
+				exit(errno);
+			}
 		}
 	}
-	if (reqsize < currsize)
-	{
-		for (i = 0; i < reqsize; i++)
+		else
 		{
-			required[i] = current[i];
-		}
-		free(oldmem);
+			wait(&status);
+			if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+			{
+				return (WEXITSTATUS(status));
+			}
 	}
-	return (required);
-}
-
-/**
- * freeargv - function that frees the array of argv
- * @argv: the array pointer
-*/
-
-void freeargv(char **argv)
-{
-	int i;
-
-	for (i = 0; argv[i]; i++)
-	{
-		free(argv[i]);
-	}
-	free(argv);
+	return (0);
 }
