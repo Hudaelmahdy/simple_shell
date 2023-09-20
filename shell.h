@@ -21,7 +21,8 @@ char **tokenizeString(char *str, const char *separator);
 void execute(char **args);
 void *re_alloc(void *oldmem, unsigned int currsize, unsigned int reqsize);
 
-extern char **env_array;
+
+extern char **envarray;
 
 /**
  * struct ls_path - link the list that containing path of directories
@@ -39,7 +40,7 @@ typedef struct ls_path
 char *get_env(const char *name);
 ls_path *push_node(ls_path **firstNode, char *str);
 ls_path *pathlink(char *pathstr);
-char *locate_command(char *commandame, ls_path *firstNode);
+char *locate_command(char *command_name, ls_path *firstNode);
 
 /**
  * struct builtin - function to the pointer with corresponding builtin command
@@ -52,10 +53,11 @@ typedef struct builtin
 	void (*func)(char **);
 } builtin;
 
+
 void(*lookup_builtin(char **argv))(char **argv);
 int _atoi(char *string);
 void exit_shell(char **argv);
-void printenv(char **argv);
+void print_env(char **argv);
 void set_env(char **argv);
 void unset_env(char **argv);
 
