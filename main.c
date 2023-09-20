@@ -48,15 +48,13 @@ void_isatty(void)
 *Return: 0
 */
 
-
 int main(void)
 {
 	char *buffer = NULL, *value, *pname, **argv;
 	size_t buf_size = 0;
 	ssize_t chars_readed = 0;
 	ls_path *firstNode = '\0';
-	void (*f)(char **);
-
+	 void (*f)(char **);
 signal(SIGINT, sig_handler);
 while (chars_readed != EOF)
 {
@@ -72,16 +70,13 @@ while (chars_readed != EOF)
 		firstNode = pathlink(value);
 		pname = locate_command(argv[0], firstNode);
 		f = lookup_builtin(argv);
-
 		if (f)
 		{
 			free(buffer);
 			f(argv);
 		}
 		else if (!pname)
-		{
 			execute(argv);
-		}
 		else if (pname)
 		{
 			free(argv[0]);
