@@ -44,7 +44,7 @@ char *locate_command(char *command_name, ls_path *firstNode);
 
 /**
  * struct builtin - function to the pointer with corresponding builtin command
- * @name: builtin name
+ * @name: builtin name.
  * @func: execute builtin command
 */
 typedef struct builtin
