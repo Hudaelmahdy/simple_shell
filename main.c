@@ -30,7 +30,7 @@ while (1)
 	else
 	{
 		buffer[strlen(buffer) - 1] = '\0';
-		command = tokening(buffer, '\0');
+		command = tokening(buffer, " ");
 		free(buffer);
 		if (strcmp(command[0], "exit") != 0)
 			shell_exit(command);
