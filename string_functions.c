@@ -2,7 +2,7 @@
 
 /**
  * str_len - function to print the length of the string
- * @s: input string
+ * @string: input string
  * Return: length of the string
 */
 
@@ -17,13 +17,13 @@ int str_len(char *s)
 
 
 /**
- * str_cmp - function to compare two strings
+ * strn_cmp - function to compare two strings
  * @s1: first string
  * @s2: second string
  * Return: comparesion
 */
 
-int str_cmp(char *s1, char *s2)
+int strn_cmp(char *s1, char *s2)
 {
 	int i;
 
