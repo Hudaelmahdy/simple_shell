@@ -19,7 +19,7 @@ char *_strdup(char *str);
 char *concat(char *name, char *sep, char *value);
 char **tokenizeString(char *str, const char *separator);
 void execute(char **args);
-void *_reallocate(void *oldmem, unsigned int currSize, unsigned int reqSize);
+void *re_alloc(void *oldmem, unsigned int currsize, unsigned int reqsize);
 
 extern char **env_array;
 
