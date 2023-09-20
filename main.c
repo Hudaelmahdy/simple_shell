@@ -32,9 +32,9 @@ void _EOF(int chars_readed, char *buffer)
 }
 
 /**
- * isatty - checks if standard input is terminal
+ * _isatty - checks if standard input is terminal
 */
-void_isatty(void)
+void _isatty(void)
 {
 	if (isatty(STDIN_FILENO))
 	{
