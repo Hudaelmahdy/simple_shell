@@ -1,43 +1,46 @@
 #include "shell.h"
 
 /**
- * tokening - function to split and create full string command
- * @str: delimiter for strtok
- * @buffer: input string pointer
+ * tokiniz - function to split and create full string command
+ * @separator: delimiter.
+ * @str: splited string.
  * Return: string with full command.
 */
 
-char **tokening(char *buffer, const char *str)
+char **tokenizeString(char *str, const char *separator)
 {
-	char *token = NULL, **commands = NULL;
-	size_t bufsize = 0;
-	int i = 0;
+	int index, wordcount;
+	char **tokenArray;
+	char *token;
+	char *cpstring;
 
-	if (buffer == NULL)
+	cpstring = malloc(_strlen(str) + 1);
+	if (cpstring == NULL)
+	{
+		perror(get_env("_"));
 		return (NULL);
-	bufsize = strlen(buffer);
-	commands = malloc((bufsize + 1) * sizeof(char *));
-	if (commands == NULL)
-	{
-		perror("Memory allocation failed");
-		free(buffer);
-		free_double_pointer(commands);
-		exit(EXIT_FAILURE);
 	}
-	token = strtok(buffer, str);
-	while (token != NULL)
+	index = 0;
+	while (str[index])
 	{
-		commands[i] = malloc(strlen(token) + 1);
-		if (commands[i] == NULL)
-		{
-			perror("Memory allocation failed");
-			free_double_pointer(commands);
-			return (NULL);
-		}
-		strcpy(commands[i], token);
-		token = strtok(NULL, str);
-		i++;
+		cpstring[index] = str[index];
+		index++;
 	}
-	commands[i] = NULL;
-	return (commands);
+	cpstring[index] = '\0';
+	token = strtok(cpstring, separator);
+	tokenArray = malloc((sizeof(char *) * 2));
+	tokenArray[0] = _strdup(token);
+	index = 1;
+	wordcount = 3;
+	while (token)
+	{
+		token = strtok(NULL, separator);
+		tokenArray = _reallocate(tokenArray, (sizeof(char *) * (wordcount - 1)),
+		(sizeof(char *) * wordcount));
+		tokenArray[index] = _strdup(token);
+		index++;
+		wordcount++;
+	}
+	free(cpstring);
+	return (tokenArray);
 }
