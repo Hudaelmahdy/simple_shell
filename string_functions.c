@@ -1,110 +1,119 @@
 #include "shell.h"
 
 /**
- * str_len - function to print the length of the string
- * @str: input string
+ * _strlen - function to print the length of the string
+ * @string: input string
  * Return: length of the string
 */
 
-unsigned int str_len(char *str)
+int _strlen(char *string)
 {
-		unsigned int length = 0;
+	int length = 0;
 
-		while (str[length])
+		while (*(string + length) != '\0')
 			length++;
 		return (length);
 }
 
 
 /**
- * str_cmp - function to compare two strings
- * @str1: first string
- * @str2: second string
- * Return: 1 in same string, 0 if not
+ * _strdup - returning tha pointer to new allocated space in memory
+ * @str: pointer of string
+ * Return: str
 */
 
-int str_cmp(char *str1, char *str2)
+int _strdup(char *str)
 {
-		unsigned int i = 0;
+	int i, j;
+	char *new;
 
-		while (str1[i])
-		{
-			if (str1[i] != str2[i])
-				return (0);
-			i++;
-		}
-		return (1);
-
-}
-
-/**
- * str_cpy - function to copy string to another
- * @dest: pointer for copied string
- * @src: pointer for string copy for
- * Return: copied string
-*/
-
-char *str_cpy(char *dest, char *src)
-{
-		char *init_dest = dest;
-
-		while (*src)
-			*dest++ = *src++;
-		*dest = '\0';
-		return (init_dest);
+	if (!str)
+	{
+		return (NULL);
+	}
+	for (j = 0; str[j] != '\0';)
+	{
+		j++;
+	}
+	new = malloc(sizeof(char) * j + 1);
+	if (!new)
+	{
+		return (NULL);
+	}
+	for (i = 0; i < j; i++)
+	{
+		new[i] = str[i];
+	}
+	new[i] = str[i];
+	return (new);
 }
 
 
 /**
- * str_cat - function that concatenates two strings
- * @dest: input string
- * @src: input string
+ * concat - function that concatenates three strings
+ * @name: input string
+ * @sep: input string
+ * @value:input string
  * Return: result string pointer
 */
 
-char *str_cat(char *dest, char  *src)
+char *concat(char *name, char  *sep, char *value)
 {
-		char *original_dest = dest;
+		char *res;
+		int i1, i2, i3, j, k;
 
-		while (*dest)
-			dest++;
-		*dest++ = '/';
-		while (*src)
-			*dest++ = *src++;
-		return (original_dest);
+		i1 = _strlen(name);
+		i2 = _strlen(sep);
+		i3 = _strlen(value);
+
+		res = malloc(i1 + i2 + i3 + 1);
+		if (!res)
+		{
+			return (NULL);
+		}
+		for (j = 0; name[j]; j++)
+		{
+			res[j] = name[j];
+		}
+		k = j;
+		for (j = 0; sep[j]; j++)
+		{
+			res[k + j] = sep[j];
+		}
+		k = k + j;
+		for (j = 0; value[j]; j++)
+		{
+			res[k + j] = value[j];
+		}
+		k = k + j;
+		res[k] = '\0';
+		return (res);
 }
 
 
 /**
- * _atoi - function that converts string to integer
- * @str: input string
- * Return: conversion integer
+ * _putchar - typing character c to stdout
+ * @c: character
+ * Return: 1 on success, -1 on failed
 */
 
-int _atoi(char *str)
+int _putchar(char c)
 {
-		int sign = 1;
-		unsigned int total = 0;
-		char null = 0;
-
-		if (str == NULL)
-			return (0);
-		while (*str)
-		{
-			if (*str == '-')
-				sign *= -1;
-			if (*str >= '0' && *str <= '9')
-			{
-				null = 1;
-				total = total * 10 + (*str - '0');
-			}
-			else if (*str < '0' || *str > '9')
-				if (null == 1)
-					break;
-			str++;
-		if (sign < 0)
-			total = (-1 * (total));
-		}
-	return (total);
+	return (write(1, &c, 1));
 }
 
+/**
+ * _puts - print the string
+ * @str: string
+*/
+
+void _puts(char *str)
+{
+	int i = 0;
+
+	while (str[i])
+	{
+		_putchar(str[i]);
+		i++;
+	}
+}

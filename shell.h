@@ -15,7 +15,7 @@
 int _putchar(char c);
 void _puts(char *str);
 int _strlen(char *string);
-char *_stdub(char *str);
+char *_strdub(char *str);
 char *concat(char *name, char *sep, char *value);
 char **tokenizeString(char *str, const char *separator);
 void execute(char **args);
@@ -36,13 +36,13 @@ typedef struct ls_path
 } ls_path;
 
 
-char *get_env(const char *envName);
-ls_path *puch_node(ls_path **firstNode, char *str);
+char *get_env(const char *name);
+ls_path *push_node(ls_path **firstNode, char *str);
 ls_path *pathlink(char *pathstr);
 char *_which(char *fileName, ls_path *firstNode);
 
 /**
- * struct builtin -function to the pointer with corresponding builtin command
+ * struct builtin - function to the pointer with corresponding builtin command
  * @name: builtin name
  * @func: execute builtin command
 */
@@ -52,7 +52,7 @@ typedef struct builtin
 	void (*func)(char **);
 } builtin;
 
-void (*lookup_builtin(char **argv))(char **argv);
+void(*lookup_builtin(char **argv))(char **argv);
 int _atoi(char *string);
 void exit_shell(char **argv);
 void printenv(char **argv);
