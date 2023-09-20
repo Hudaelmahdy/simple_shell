@@ -2,144 +2,87 @@
 
 /**
 *get_env - get the value of enviromental variable
-*@name: name of env
-*Return: value
+*@envarray: name of array
+*Return: 0
 */
 
-char *get_env(const char *name, char **envarray)
+void get_env(char **envarray)
 {
-	int i, j;
+	size_t index = 0;
 
-	char *value;
-
-	if (!name)
-		return (NULL);
-	for (i = 0; envarray[i]; i++)
+	while (envarray[index])
 	{
-		j = 0;
-		if (name[j] == envarray[i][j])
-		{
-			while (name[j])
-			{
-				if (name[j] != envarray[i][j])
-					break;
-				j++;
-			}
-			if (name[j] == '\0')
-			{
-				value = (envarray[i] + j + 1);
-				return (value);
-			}
+		write(STDOUT_FILENO, envarray[index], str_len(envarray[index]));
+		write(STDOUT_FILENO, "\n", 1);
+		index++;
 		}
 	}
-	return (0);
-}
+
 
 
 /**
-*push_node - add new node to the linked list
-*@firstNode: double pointer to the head
-*@str: pointer to string to be stored in the new node
-*Return: address of
+*user_command - function to read al line of input from the user
+*Return: input for user
 */
 
-ls_path *push_node(ls_path **firstNode, char *str)
+char *user_command(void)
 {
-	ls_path *tmp;
-	ls_path *new;
+	size_t inputSize = 0;
+	char *inputLine = NULL;
 
-	new = malloc(sizeof(ls_path));
-	if (!new || !str)
+	if (isatty(STDIN_FILENO))
+		write(STDOUT_FILENO, "$", 2);
+
+	if (getline(&inputLine, &inputSize, stdin) == -1)
 	{
+		free(inputLine);
 		return (NULL);
 	}
+	return (inputLine);
+}
 
-	new->directory = str;
+/**
+*evaluate_path - check command provided in argv
+*@argv: command input
+*@envarray: enviroment
+*Return:pointer of str
+*/
 
-	new->next_dir = '\0';
+int evaluate_path(char **argv, char **envarray)
+{
+	char *dirToken = NULL, *pathValue = NULL, *fullPath = NULL;
+	size_t dir_len, cmd_len;
+	struct stat command_stat;
 
-	if (!*firstNode)
+if (stat(*argv, &command_stat) == 0)
+	return (-1);
+	pathValue = extract_path(envarray);
+	if (!pathValue)
+		return (-1);
+	dirToken = _strtok(pathValue, ":");
+	cmd_len = str_len(*argv);
+	while (dirToken)
 	{
-		*firstNode = new;
-	}
-	else
-	{
-		tmp = *firstNode;
-		while (tmp->next_dir)
+		dir_len = str_len(dirToken);
+		fullPath = malloc(sizeof(char) * (dir_len + cmd_len + 2));
+		if (!fullPath)
 		{
-			tmp = tmp->next_dir;
+			free(pathValue);
+			return (-1);
 		}
-		tmp->next_dir = new;
-	}
-	return (*firstNode);
-}
+		fullPath = str_cpy(fullPath, dirToken);
+		str_cat(fullPath, "/");
+		str_cat(fullPath, *argv);
 
-/**
-*pathlink- create link for path
-*@pathstr: string of path
-*Return: pointer to linked list
-*/
-
-ls_path *pathlink(char *pathstr)
-{
-	ls_path *firstNode = '\0';
-
-	char *path_segment;
-
-	char *copied_path = _strdup(pathstr);
-
-	path_segment = strtok(copied_path, ":");
-	while (path_segment)
-	{
-		firstNode = push_node(&firstNode, path_segment);
-		path_segment = strtok(NULL, ":");
-	}
-
-	return (firstNode);
-}
-
-
-/**
-*locate_command - function to find full path of a command
-*@command_name: name of command
-*@firstNode: name of head node that links directories
-*Return: path or NULL on failure
-*/
-
-char *locate_command(char *command_name, ls_path *firstNode)
-{
-	struct stat check;
-	char *fullpath;
-
-	ls_path *tmp = firstNode;
-
-	while (tmp)
-	{
-		fullpath = concat(tmp->directory, "/", command_name);
-		if (stat(fullpath, &check) == 0)
+		if (stat(fullPath, &command_stat) == 0)
 		{
-			return (fullpath);
+			*argv = fullPath;
+			free(pathValue);
+			return (0);
 		}
-		free(fullpath);
-		tmp = tmp->next_dir;
+		free(fullPath);
+		dirToken = _strtok(NULL, ":");
 	}
-	return (NULL);
-}
-
-/**
- *free_ls - frees the linkedlist
- *@firstNode: pointer to head node
-*/
-
-void free_ls(ls_path *firstNode)
-{
-	ls_path *temp_node;
-
-	while (firstNode)
-	{
-		temp_node = firstNode->next_dir;
-		free(firstNode->directory);
-		free(firstNode);
-		firstNode = temp_node;
-	}
+	free(pathValue);
+	return (-1);
 }
