@@ -1,119 +1,110 @@
 #include "shell.h"
 
 /**
- * _strlen - function to print the length of the string
- * @string: input string
+ * str_len - function to print the length of the string
+ * @s: input string
  * Return: length of the string
 */
 
-int _strlen(char *string)
+int str_len(char *s)
 {
 	int length = 0;
 
-		while (*(string + length) != '\0')
+		while (*(s + length) != '\0')
 			length++;
 		return (length);
 }
 
 
 /**
- * _strdup - returning tha pointer to new allocated space in memory
- * @str: pointer of string
- * Return: str
+ * str_cmp - function to compare two strings
+ * @s1: first string
+ * @s2: second string
+ * Return: comparesion
 */
 
-char *_strdup(char *str)
+int str_cmp(char *s1, char *s2)
 {
-	int i, j;
-	char *new;
+	int i;
 
-	if (!str)
+	for (i = 0; s1[i] != '\0' && s2[i] != '\0'; i++)
 	{
-		return (NULL);
+		if (s1[i] != s2[i])
+		{
+			return ((int)s1[i] - s2[i]);
+		}
 	}
-	for (j = 0; str[j] != '\0';)
-	{
-		j++;
-	}
-	new = malloc(sizeof(char) * j + 1);
-	if (!new)
-	{
-		return (NULL);
-	}
-	for (i = 0; i < j; i++)
-	{
-		new[i] = str[i];
-	}
-	new[j] = str[j];
-	return (new);
+	return (0);
 }
 
 
 /**
- * concat - function that concatenates three strings
- * @name: input string
- * @sep: input string
- * @value:input string
- * Return: result string pointer
+ * str_cmp - function that compares two strings
+ * @s1: 1st string
+ * @s2: 2nd string
+ * @n:number of characters
+ * Return: comparesion
 */
 
-char *concat(char *name, char *sep, char *value)
+size_t str_cmp(char *s1, char *s2, size_t n)
 {
-		char *res;
-		int i1, i2, i3, j, k;
+		size_t k, j;
 
-		i1 = _strlen(name);
-		i2 = _strlen(sep);
-		i3 = _strlen(value);
+		for (j = 0; s1[j] != '\0' && j < n; j++)
+		{
+			k = s1[j] - s2[j];
 
-		res = malloc(i1 + i2 + i3 + 1);
-		if (!res)
-		{
-			return (NULL);
+			if (k != 0)
+			{
+				return (k);
+			}
 		}
-		for (j = 0; name[j]; j++)
-		{
-			res[j] = name[j];
-		}
-		k = j;
-		for (j = 0; sep[j]; j++)
-		{
-			res[k + j] = sep[j];
-		}
-		k = k + j;
-		for (j = 0; value[j]; j++)
-		{
-			res[k + j] = value[j];
-		}
-		k = k + j;
-		res[k] = '\0';
-		return (res);
+		return (0);
 }
 
 
 /**
- * _putchar - typing character c to stdout
- * @c: character
- * Return: 1 on success, -1 on failed
+ * str_cpy - copying the string from src to dest
+ * @dest: destination
+ * @src: source of copy
+ * Return: pointer of destination
 */
 
-int _putchar(char c)
-{
-	return (write(1, &c, 1));
-}
-
-/**
- * _puts - print the string
- * @str: string
-*/
-
-void _puts(char *str)
+char str_cpy(char *dest, char *src)
 {
 	int i = 0;
 
-	while (str[i])
+	while (*(src + i) != '\0')
 	{
-		_putchar(str[i]);
-		i++;
+		*(dest + i) = *(src + i);
+		++i;
 	}
+	*(dest + i) = *(src + i);
+	return (dest);
+}
+
+/**
+ * str_cat - concenates te strings
+ * @dest: destination
+ * @src: source
+ * Return: destination
+*/
+
+char *str_cat(char *dest, char *src)
+{
+	int des = 0;
+	int sour = 0;
+
+	while (dest[des] != '\0')
+	{
+		des++;
+	}
+	while (src[sour] != '\0')
+	{
+		dest[des] = src[sour];
+		des++;
+		sour++;
+	}
+	dest[des] = '\0';
+	return (dest);
 }
