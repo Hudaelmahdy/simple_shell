@@ -39,7 +39,7 @@ typedef struct ls_path
 char *get_env(const char *name);
 ls_path *push_node(ls_path **firstNode, char *str);
 ls_path *pathlink(char *pathstr);
-char *_which(char *fileName, ls_path *firstNode);
+char *locate_command(char *commandame, ls_path *firstNode);
 
 /**
  * struct builtin - function to the pointer with corresponding builtin command
