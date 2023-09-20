@@ -19,9 +19,9 @@ char *_stdub(char *str);
 char *concat(char *name, char *sep, char *value);
 char **tokenizeString(char *str, const char *separator);
 void execute(char **args);
-void *_reallocate(void *oldmemory, unsigned int current_size, unsigned int required_size);
+void *_reallocate(void *oldmem, unsigned int currSize, unsigned int reqSize);
 
-extern cahr **env_array;
+extern char **env_array;
 
 /**
  * struct ls_path - link the list that containing path of directories
@@ -33,7 +33,7 @@ typedef struct ls_path
 {
 	char *directory;
 	struct ls_path *next_dir;
-}ls_path;
+} ls_path;
 
 
 char *get_env(const char *envName);
@@ -41,11 +41,16 @@ ls_path *puch_node(ls_path **firstNode, char *dirpath);
 ls_path *pathlink(char *pathstr);
 char *_which(char *fileName, ls_path *firstNode);
 
+/**
+ * struct builtin -function to the pointer with corresponding builtin command
+ * @name: builtin name
+ * @func: execute builtin command
+*/
 typedef struct builtin
 {
 	char *name;
 	void (*func)(char **);
-}builtin;
+} builtin;
 
 void (*lookup_builtin(char **argv))(char **argv);
 int _atoi(char *string);
