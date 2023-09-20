@@ -22,7 +22,7 @@ int _strlen(char *string)
  * Return: str
 */
 
-int _strdup(char *str)
+char _strdup(char *str)
 {
 	int i, j;
 	char *new;
@@ -44,7 +44,7 @@ int _strdup(char *str)
 	{
 		new[i] = str[i];
 	}
-	new[i] = str[i];
+	new[j] = str[j];
 	return (new);
 }
 
@@ -57,7 +57,7 @@ int _strdup(char *str)
  * Return: result string pointer
 */
 
-char *concat(char *name, char  *sep, char *value)
+char *concat(char *name, char *sep, char *value)
 {
 		char *res;
 		int i1, i2, i3, j, k;

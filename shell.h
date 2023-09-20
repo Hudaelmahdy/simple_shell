@@ -15,7 +15,7 @@
 int _putchar(char c);
 void _puts(char *str);
 int _strlen(char *string);
-char *_strdub(char *str);
+char *_strdup(char *str);
 char *concat(char *name, char *sep, char *value);
 char **tokenizeString(char *str, const char *separator);
 void execute(char **args);
