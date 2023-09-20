@@ -8,25 +8,54 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <errno.h>
+#include <stddef.h>
+#include <signal.h>
 
-int main(int argc, char **argv, char **env);
-void prompt(void);
-void handle(int sig);
-void _EOF(char *buffer);
-void shell_exit(char **command);
-int child(char **command, char *name, char **env, int cycles);
-int Ch_dir(const char *path);
-void execute(char **command, char *name, char **env, int cycles);
-void print_env(char **env);
-char **_getpath(char **env);
-void error(char *name, int cycles, char **command);
-char **tokening(char *buffer, const char *str);
-void free_double_pointer(char **command);
-void free_exit(char **command);
-int str_cmp(char *str1, char *str2);
-unsigned int str_len(char *str);
-char *str_cpy(char *dest, char *src);
-char *str_cat(char *dest, char *src);
-int _atoi(char *str);
+int _putchar(char c);
+void _puts(char *str);
+int _strlen(char *string);
+char *_stdub(char *str);
+char *concat(char *name, char *sep, char *value);
+char **tokenizeString(char *str, const char *separator);
+void execute(char **args);
+void *_reallocate(void *oldmemory, unsigned int current_size, unsigned int required_size);
+
+extern cahr **env_array;
+
+/**
+ * struct ls_path - link the list that containing path of directories
+ * @directory: the directory in the path
+ * @next_dir: pointer to the next directory
+*/
+
+typedef struct ls_path
+{
+	char *directory;
+	struct ls_path *next_dir;
+}ls_path;
+
+
+char *get_env(const char *envName);
+ls_path *puch_node(ls_path **firstNode, char *dirpath);
+ls_path *pathlink(char *pathstr);
+char *_which(char *fileName, ls_path *firstNode);
+
+typedef struct builtin
+{
+	char *name;
+	void (*func)(char **);
+}builtin;
+
+void (*lookup_builtin(char **argv))(char **argv);
+int _atoi(char *string);
+void exit_shell(char **argv);
+void printenv(char **argv);
+void set_env(char **argv);
+void unset_env(char **argv);
+
+void freeargv(char **argv);
+void free_ls(ls_path *firstNode);
+
 
 #endif
