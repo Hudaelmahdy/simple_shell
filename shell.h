@@ -54,7 +54,7 @@ typedef struct builtin
 } builtin;
 
 
-void(*lookup_builtin(char **argv))(char **argv);
+void (*lookup_builtin(char **argv))(char **argv);
 int _atoi(char *string);
 void exit_shell(char **argv);
 void print_env(char **argv);

@@ -57,9 +57,13 @@ void execute(char **args)
 		return;
 	}
 	pid = fork();
+	if (pid == -1)
+	{
+		perror(get_env("_"));
+	}
 	if (pid == 0)
 	{
-		execve(args[0], args, env_array);
+		execve(args[0], args, envarray);
 			perror(args[0]);
 		exit(EXIT_FAILURE);
 	}

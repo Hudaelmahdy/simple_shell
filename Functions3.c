@@ -14,20 +14,20 @@ char *get_env(const char *name)
 
 	if (!name)
 		return (NULL);
-	for (i = 0; env_array[i]; i++)
+	for (i = 0; envarray[i]; i++)
 	{
 		j = 0;
-		if (name[j] == env_array[i][j])
+		if (name[j] == envarray[i][j])
 		{
 			while (name[j])
 			{
-				if (name[j] != env_array[i][j])
+				if (name[j] != envarray[i][j])
 					break;
 				j++;
 			}
 			if (name[j] == '\0')
 			{
-				value = (env_array[i] + j + 1);
+				value = (envarray[i] + j + 1);
 				return (value);
 			}
 		}

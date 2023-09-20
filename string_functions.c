@@ -22,7 +22,7 @@ int _strlen(char *string)
  * Return: str
 */
 
-char _strdup(char *str)
+char *_strdup(char *str)
 {
 	int i, j;
 	char *new;

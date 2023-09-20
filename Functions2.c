@@ -6,12 +6,12 @@
  *Return: pointer to function
  */
 
-void(*lookup_builtin(char **argv))(char **argv)
+void (*lookup_builtin(char **argv))(char **argv)
 {
 	int i, j;
 	builtin commands[] = {
 		{"exit", exit_shell},
-		{"env", printenv},
+		{"env", print_env},
 		{"setenv", set_env},
 		{"unsetenv", unset_env},
 		{NULL, NULL}

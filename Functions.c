@@ -53,17 +53,19 @@ int _atoi(char *string)
 }
 
 /**
-*printenv - prints the environment
+*print_env - prints the environment
+*envarray - store the value printed by the function
 *@argv: arguments
 */
 
-void printenv(char **argv __attribute__ ((unused)))
+
+void print_env(char **argv __attribute__ ((unused)))
 {
 	int i;
 
-	for (i = 0; env_array[i]; i++)
+	for (i = 0; envarray[i]; i++)
 	{
-		_puts(env_array[i]);
+		_puts(envarray[i]);
 		_puts("\n");
 	}
 }
@@ -82,34 +84,34 @@ void set_env(char **argv)
 		perror(get_env("_"));
 		return;
 	}
-	for (i = 0; env_array[i]; i++)
+	for (i = 0; envarray[i]; i++)
 	{
 		j = 0;
-		if (argv[1][j] == env_array[i][j])
+		if (argv[1][j] == envarray[i][j])
 		{
 			while (argv[1][j])
 			{
-				if (argv[1][j] != env_array[i][j])
+				if (argv[1][j] != envarray[i][j])
 					break;
-				j++
+				j++;
 			}
 			if (argv[i][j] == '\0')
 			{
 				k = 0;
 				while (argv[2][k])
 				{
-					env_array[i][j + 1 + k] = argv[2][k];
+					envarray[i][j + 1 + k] = argv[2][k];
 					k++;
 				}
-				env_array[i][j + 1 + k] = '\0';
+				envarray[i][j + 1 + k] = '\0';
 				return;
 			}
 		}
 	}
-if (!env_array[i])
+if (!envarray[i])
 	{
-	env_array[i] = concat(argv[1], "=", argv[2]);
-	env_array[i + 1] = '\0';
+	envarray[i] = concat(argv[1], "=", argv[2]);
+	envarray[i + 1] = '\0';
 	}
 }
 
@@ -128,24 +130,24 @@ void unset_env(char **argv)
 		perror(get_env("_"));
 		return;
 	}
-	for (i = 0; env_array[i]; i++)
+	for (i = 0; envarray[i]; i++)
 	{
 		j = 0;
-		if (argv[1][j] == env_array[i][j])
+		if (argv[1][j] == envarray[i][j])
 		{
 			while (argv[1][j])
 			{
-				if (argv[1][j] != env_array[i][j])
+				if (argv[1][j] != envarray[i][j])
 					break;
 				j++;
 			}
 			if (argv[1][j] == '\0')
 			{
-				free(env_array[i]);
-				env_array[i] = env_array[i + 1];
-				while (env_array[i])
+				free(envarray[i]);
+				envarray[i] = envarray[i + 1];
+				while (envarray[i])
 				{
-					env_array[i] = env_array[i + 1];
+					envarray[i] = envarray[i + 1];
 					i++;
 				}
 				return;
