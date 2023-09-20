@@ -1,123 +1,155 @@
 #include "shell.h"
 
 /**
-*free_double_pointer - function to free a dynamically allocated memory
-*@command: pointer to memory
-*Return: nothing
+*exit_shell - function to exit shell
+*@argv: array
 */
 
-void free_double_pointer(char **command)
+void exit_shell(char **argv)
 {
-	size_t i = 0;
+	int i, n;
 
-if (command == NULL)
-	return;
-
-while (command[i])
-{
-	free(command[i]);
-	i++;
+	if (argv[1])
+	{
+		n = _atoi(argv[1]);
+			if (n <= -1)
+				n = 2;
+			freeargv(argv);
+			exit(n);
+	}
+	for (i = 0; argv[i]; i++)
+		free(argv[i]);
+	free(argv);
+	exit(0);
 }
-free(command);
+
+/**
+*_atoi - convert string to integer
+*@string: pointer to string
+*Return: integer
+*/
+
+int _atoi(char *string)
+{
+	int i, integer, sign = 1;
+
+	i = 0;
+
+	integer = 0;
+	while (!((string[i] >= '0') && (string[i] <= '9')) && (string[i] != '\0'))
+	{
+		if (string[i] == '-')
+		{
+			sign = sign * (-1);
+		}
+		i++;
+	}
+	while ((string[i] >= '0') && (string[i] <= '9'))
+	{
+		integer = (integer * 10) + (sign * (string[i] - '0'));
+		i++;
+	}
+	return (integer);
+}
+
+/**
+*printenv - prints the environment
+*@argv: arguments
+*/
+
+void printenv(char **argv __attribute__((unused)))
+{
+	int i;
+
+	for (i = 0; env_array[i]; i++)
+	{
+		_puts(env_array[i]);
+		_puts("\n");
+	}
+}
+
+/**
+*set_env - set new enviroment
+*@argv: arguments
+*/
+
+void set_env(char **argv)
+{
+	int i, j, k;
+
+	if (!argv[1] || !argv[2])
+	{
+		perror(get_env("_"));
+		return;
+	}
+	for (i = 0; env_array[i]; i++)
+	{
+		j = 0;
+		if (argv[1][j] == env_array[i][j])
+		{
+			while (argv[1][j])
+			{
+				if (argv[1][j] != env_array[i][j])
+					break;
+				j++
+			}
+			if (argv[i][j] == '\0')
+			{
+				k = 0;
+				while (argv[2][k])
+				{
+					env_array[i][j + 1 + k] = argv[2][k];
+					k++;
+				}
+				env_array[i][j + 1 + k] = '\0';
+				return;
+			}
+		}
+	}
+if (!env_array[i])
+	{
+	env_array[i] = concat(argv[1], "=", argv[2]);
+	env_array[i + 1] = '\0';
+	}
 }
 
 
 /**
-*free_exit - function to frees memory and exit
-*@command: pointer to memory
-*Return: nothing
+*unset_env - remove an enviroment
+*@argv: arguments
 */
 
-void free_exit(char **command)
+void unset_env(char **argv)
 {
-	size_t i = 0;
+	int i, j;
 
-if (command == NULL)
-return;
-
-while (command[i])
-{
-	free(command[i]);
-	i++;
-}
-free(command);
-exit(EXIT_FAILURE);
-}
-
-
-/**
-*child - function to create child process
-*@command: poiter
-*@name: pointer to name of shell
-*@env: pointer to enviromental variables
-*@cycles: excuted cycles
-*Return: nothing
-*/
-
-int child(char **command, char *name, char **env, int cycles)
-{
-	int pid = 0;
-	int status = 0;
-	int child_status = 0;
-
-pid = fork();
-if (pid < 0)
-{
-	perror("Error: ");
-	free_exit(command);
-}
-else if (pid == 0)
-{
-	execute(command, name, env, cycles);
-	free_double_pointer(command);
-	exit(EXIT_SUCCESS);
-}
-else
+	if (!argv[1])
 	{
-	child_status = waitpid(pid, &status, 0);
-	if (child_status < 0)
-	{
-		free_exit(command);
+		perror(get_env("_"));
+		return;
 	}
-	else
+	for (i = 0; env_array[i]; i++)
 	{
-		free_double_pointer(command);
+		j = 0;
+		if (argv[1][j] == env_array[i][j])
+		{
+			while (argv[1][j])
+			{
+				if (argv[1][j] != env_array[i][j])
+					break;
+				j++;
+			}
+			if (argv[1][j] == '\0')
+			{
+				free(env_array[i]);
+				env_array[i] env_array[i + 1];
+				while (env_array[i])
+				{
+					env_array[i] env_array[i + 1];
+					i++;
+				}
+				return;
+			}
+		}
 	}
-}
-return (WEXITSTATUS(status));
-}
-
-/**
-*Ch_dir - function to change working directory
-*@path: new dir
-*Return: 0 on sucess, -1 on failure
-*/
-
-int Ch_dir(const char *path)
-{
-	char *buf = NULL;
-	size_t size = 1024;
-	int ispathAllocated = 0;
-
-if (path == NULL)
-{
-	buf = getcwd(buf, size);
-	if (buf == NULL)
-	{
-		perror("getcwd");
-		return (98);
-	}
-	path = buf;
-	ispathAllocated = 1;
-}
-if (chdir(path) == -1)
-{
-	perror(path);
-	if (ispathAllocated)
-		free(buf);
-	return (98);
-}
-if (ispathAllocated)
-	free(buf);
-return (1);
 }
