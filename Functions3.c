@@ -21,11 +21,11 @@ void get_env(char **envarray)
 
 
 /**
-*user_command - function to read al line of input from the user
+*user_input - function to read al line of input from the user
 *Return: input for user
 */
 
-char *user_command(void)
+char *user_input(void)
 {
 	size_t inputSize = 0;
 	char *inputLine = NULL;
