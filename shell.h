@@ -15,7 +15,7 @@ extern char **environ;
 
 char *extract_path(char **envarray);
 int evaluate_path(char **argv, char **envarray);
-char *user_command(void);
+char *user_input(void);
 void get_env(char **envarray);
 char **get_token(char *string);
 void exit_shell(char **argv, char *string, int _exit);
