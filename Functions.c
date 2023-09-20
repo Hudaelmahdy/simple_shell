@@ -57,7 +57,7 @@ int _atoi(char *string)
 *@argv: arguments
 */
 
-void printenv(char **argv __attribute__((unused)))
+void printenv(char **argv __attribute__ ((unused)))
 {
 	int i;
 
@@ -142,10 +142,10 @@ void unset_env(char **argv)
 			if (argv[1][j] == '\0')
 			{
 				free(env_array[i]);
-				env_array[i] env_array[i + 1];
+				env_array[i] = env_array[i + 1];
 				while (env_array[i])
 				{
-					env_array[i] env_array[i + 1];
+					env_array[i] = env_array[i + 1];
 					i++;
 				}
 				return;
