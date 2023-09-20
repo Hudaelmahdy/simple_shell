@@ -28,17 +28,17 @@ void get_env(char **envarray)
 char *user_input(void)
 {
 	size_t inputSize = 0;
-	char *inputLine = NULL;
+	char *string = NULL;
 
 	if (isatty(STDIN_FILENO))
 		write(STDOUT_FILENO, "$", 2);
 
-	if (getline(&inputLine, &inputSize, stdin) == -1)
+	if (getline(&string, &inputSize, stdin) == -1)
 	{
-		free(inputLine);
+		free(string);
 		return (NULL);
 	}
-	return (inputLine);
+	return (string);
 }
 
 /**
