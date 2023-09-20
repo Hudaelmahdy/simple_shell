@@ -6,7 +6,7 @@
 *Return: value
 */
 
-char *get_env(const char *name)
+char *get_env(const char *name, char **envarray)
 {
 	int i, j;
 

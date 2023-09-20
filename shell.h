@@ -18,7 +18,7 @@ int _strlen(char *string);
 char *_strdup(char *str);
 char *concat(char *name, char *sep, char *value);
 char **tokenizeString(char *str, const char *separator);
-void execute(char **args);
+void execute(char **args, char **envarray);
 void *re_alloc(void *oldmem, unsigned int currsize, unsigned int reqsize);
 
 
@@ -37,7 +37,7 @@ typedef struct ls_path
 } ls_path;
 
 
-char *get_env(const char *name);
+char *get_env(const char *name, char **envarray);
 ls_path *push_node(ls_path **firstNode, char *str);
 ls_path *pathlink(char *pathstr);
 char *locate_command(char *command_name, ls_path *firstNode);
@@ -50,16 +50,16 @@ char *locate_command(char *command_name, ls_path *firstNode);
 typedef struct builtin
 {
 	char *name;
-	void (*func)(char **);
+	void (*func)(char **, char **);
 } builtin;
 
 
-void (*lookup_builtin(char **argv))(char **argv);
+void (*lookup_builtin(char **argv, char **envarray))(char **, char **);
 int _atoi(char *string);
-void exit_shell(char **argv);
-void print_env(char **argv);
-void set_env(char **argv);
-void unset_env(char **argv);
+void exit_shell(char **argv, char **envarray);
+void print_env(char **argv, char **envarray);
+void set_env(char **argv, char **envarray);
+void unset_env(char **argv, char **envarray);
 
 void freeargv(char **argv);
 void free_ls(ls_path *firstNode);

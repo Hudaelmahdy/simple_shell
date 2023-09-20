@@ -13,11 +13,12 @@ char **tokenizeString(char *str, const char *separator)
 	char **tArray;
 	char *token;
 	char *cpstring;
+	char **envarray = NULL;
 
 	cpstring = malloc(_strlen(str) + 1);
 	if (cpstring == NULL)
 	{
-		perror(get_env("_"));
+		perror(get_env("_", envarray));
 		return (NULL);
 	}
 	index = 0;
@@ -48,7 +49,7 @@ char **tokenizeString(char *str, const char *separator)
  * execute - to executs the commands
  * @args: arguments array
 */
-void execute(char **args)
+void execute(char **args, char **envarray)
 {
 	int pid, exitStatus;
 
@@ -59,7 +60,7 @@ void execute(char **args)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror(get_env("_"));
+		perror(get_env("_", envarray));
 	}
 	if (pid == 0)
 	{

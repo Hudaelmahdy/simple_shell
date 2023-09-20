@@ -6,7 +6,7 @@
  *Return: pointer to function
  */
 
-void (*lookup_builtin(char **argv))(char **argv)
+void (*lookup_builtin(char **argv, char **envarray))(char **, char **)
 {
 	int i, j;
 	builtin commands[] = {
@@ -16,6 +16,9 @@ void (*lookup_builtin(char **argv))(char **argv)
 		{"unsetenv", unset_env},
 		{NULL, NULL}
 	};
+
+	(void)envarray;
+
 for (i = 0; commands[i].name; i++)
 {
 	j = 0;

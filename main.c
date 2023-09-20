@@ -54,7 +54,8 @@ int main(void)
 	size_t buf_size = 0;
 	ssize_t chars_readed = 0;
 	ls_path *firstNode = '\0';
-	 void (*f)(char **);
+	char **envarray = NULL;
+	 void (*f)(char **, char **);
 signal(SIGINT, sig_handler);
 while (chars_readed != EOF)
 {
@@ -63,25 +64,25 @@ while (chars_readed != EOF)
 	_EOF(chars_readed, buffer);
 	argv = tokenizeString(buffer, " \n");
 	if (!argv || !argv[0])
-		execute(argv);
+		execute(argv, envarray);
 	else
 	{
-		value = get_env("PATH");
+		value = get_env("PATH", envarray);
 		firstNode = pathlink(value);
 		pname = locate_command(argv[0], firstNode);
-		f = lookup_builtin(argv);
+		f = lookup_builtin(argv, envarray);
 		if (f)
 		{
 			free(buffer);
-			f(argv);
+			f(argv, envarray);
 		}
 		else if (!pname)
-			execute(argv);
+			execute(argv, envarray);
 		else if (pname)
 		{
 			free(argv[0]);
 			argv[0] = pname;
-			execute(argv);
+			execute(argv, envarray);
 		}
 	}
 }

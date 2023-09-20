@@ -5,9 +5,11 @@
 *@argv: array
 */
 
-void exit_shell(char **argv)
+void exit_shell(char **argv, char **envarray)
 {
 	int i, n;
+
+	(void)envarray;
 
 	if (argv[1])
 	{
@@ -59,7 +61,7 @@ int _atoi(char *string)
 */
 
 
-void print_env(char **argv __attribute__ ((unused)))
+void print_env(char **argv __attribute__ ((unused)), char **envarray)
 {
 	int i;
 
@@ -75,13 +77,13 @@ void print_env(char **argv __attribute__ ((unused)))
 *@argv: arguments
 */
 
-void set_env(char **argv)
+void set_env(char **argv, char **envarray)
 {
 	int i, j, k;
 
 	if (!argv[1] || !argv[2])
 	{
-		perror(get_env("_"));
+		perror(get_env("_", envarray));
 		return;
 	}
 	for (i = 0; envarray[i]; i++)
@@ -121,13 +123,13 @@ if (!envarray[i])
 *@argv: arguments
 */
 
-void unset_env(char **argv)
+void unset_env(char **argv, char **envarray)
 {
 	int i, j;
 
 	if (!argv[1])
 	{
-		perror(get_env("_"));
+		perror(get_env("_", envarray));
 		return;
 	}
 	for (i = 0; envarray[i]; i++)
