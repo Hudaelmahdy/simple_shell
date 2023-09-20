@@ -1,113 +1,97 @@
 #include "shell.h"
 
 /**
-*main - Entry point.
-*@argc: numbers of arguments
-*@argv: vector of arguments
-*@env: pointer to enviromental variable.
+ * sig_handler - signal handler for SIGINT signal that checks ctrl+c if pressed
+ * @num: int
+*/
+void sig_handler(int num)
+{
+	if (num == SIGINT)
+	{
+		_puts("\n#simple_shell_project$ ");
+	}
+}
+
+/**
+ * _EOF - function that handling the End Of File
+ * @chars_readed: return getline unction value
+ * @buffer: buffer
+*/
+void _EOF(int chars_readed, char *buffer)
+{
+	(void)buffer;
+	if (chars_readed == -1)
+	{
+		if (isatty(STDIN_FILENO))
+		{
+			_puts("\n");
+			free(buffer);
+		}
+		exit(0);
+	}
+}
+
+/**
+ * isatty - checks if standard input is terminal
+*/
+void_isatty(void)
+{
+	if (isatty(STDIN_FILENO))
+	{
+		_puts("#simple_shell_project$ ");
+	}
+}
+
+
+/**
+*main - shell
 *Return: 0
 */
 
 
-int main(int argc, char **argv, char **env)
+int main(void)
 {
-	char *buffer = NULL, **command = NULL;
+	char *buffer = NULL, *value, *pname, **argv;
 	size_t buf_size = 0;
 	ssize_t chars_readed = 0;
-	int cycles = 0;
-	(void)argc;
+	ls_path *firstNode = '\0';
+	void (*f)(char **);
 
-while (1)
+signal(SIGINT, sig_handler);
+while (chars_readed != EOF)
 {
-	cycles++;
-	prompt();
-	signal(SIGINT, handle);
+	_isatty();
 	chars_readed = getline(&buffer, &buf_size, stdin);
-	if (chars_readed == EOF)
-	_EOF(buffer);
-	else if (*buffer == '\n')
-		free(buffer);
+	_EOF(chars_readed, buffer);
+	argv = tokenizeString(buffer, " \n");
+	if (!argv || !argv[0])
+		execute(argv);
 	else
 	{
-		buffer[strlen(buffer) - 1] = '\0';
-		command = tokening(buffer, " ");
-		free(buffer);
-		if (strcmp(command[0], "exit") != 0)
-			shell_exit(command);
-		else if (strcmp(command[0], "cd") != 0)
-			Ch_dir(command[1]);
-		else
-				child(command, argv[0], env, cycles);
+		value = get_env("PATH");
+		firstNode = pathlink(value);
+		pname = locate_command(argv[0], firstNode);
+		f = lookup_builtin(argv);
+
+		if (f)
+		{
+			free(buffer);
+			f(argv);
+		}
+		else if (!pname)
+		{
+			execute(argv);
+		}
+		else if (pname)
+		{
+			free(argv[0]);
+			argv[0] = pname;
+			execute(argv);
+		}
 	}
-	fflush(stdin);
-	buffer = NULL, buf_size = 0;
 }
-if (chars_readed == -1)
-	return (EXIT_FAILURE);
-return (EXIT_SUCCESS);
-}
-
-/**
-*prompt - function to print prompt
-*Return: nothing
-*/
-
-void prompt(void)
-{
-		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "simple_shell", 13);
-}
-
-/**
-*handle- function to handle signal
-*@sig: signal
-*Return: nothing
-*/
-
-void handle(int sig)
-{
-	(void)sig;
-	write(STDOUT_FILENO, "\nsimple_shell", 14);
-}
-
-/**
-*_EOF - function to check end of file
-*@buffer: pointer to string
-*Return: nothing
-*
-*/
-void _EOF(char *buffer)
-{
-	if (buffer)
-	{
-		free(buffer);
-		buffer =  NULL;
-	}
-
-if (isatty(STDIN_FILENO))
-{
-	write(STDOUT_FILENO, "\n", 1);
-}
+free_ls(firstNode);
+freeargv(argv);
 free(buffer);
-exit(EXIT_SUCCESS);
-}
-
-/**
-*shell_exit - function to exit shell
-*@command: pointer to command
-*Return: nothing
-*/
-
-void shell_exit(char **command)
-{
-	int exit_status = 0;
-
-if (command[1] == NULL)
-{
-	free_double_pointer(command);
-	exit(EXIT_SUCCESS);
-}
-exit_status = _atoi(command[1]);
-free_double_pointer(command);
-exit(exit_status);
+return (0);
 }
