@@ -41,6 +41,7 @@ char *_strtok(char *str, const char *separator)
 size_t _strcspn(const char *s1, const char *s2)
 {
 	size_t r = 0;
+
 	while (*s1)
 	{
 		if (_strchr(s2, *s1))

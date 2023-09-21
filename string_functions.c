@@ -17,7 +17,7 @@ int str_len(char *s)
 
 
 /**
- * strn_cmp - function to compare two strings
+ * str_cmp - function to compare two strings
  * @s1: first string
  * @s2: second string
  * Return: comparesion
@@ -39,7 +39,7 @@ int str_cmp(char *s1, char *s2)
 
 
 /**
- * str_cmp - function that compares two strings
+ * strn_cmp - function that compares two strings
  * @s1: 1st string
  * @s2: 2nd string
  * @n:number of characters
