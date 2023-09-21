@@ -2,7 +2,7 @@
 
 /**
  * str_len - function to print the length of the string
- * @string: input string
+ * @s: input string
  * Return: length of the string
 */
 
