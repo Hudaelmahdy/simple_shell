@@ -55,10 +55,10 @@ int evaluate_path(char **argv, char **envarray)
 	struct stat command_stat;
 
 if (stat(*argv, &command_stat) == 0)
-{
-	return (-1);
-}
-	pathValue = extract_path(envarray);
+	{
+		return (-1);
+	}
+pathValue = extract_path(envarray);
 	if (!pathValue)
 		return (-1);
 	dirToken = _strtok(pathValue, ":");
