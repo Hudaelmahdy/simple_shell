@@ -3,7 +3,7 @@
 /**
  *main - Entry point
  *@argc: count arguments
- *@rags: arguments
+ *@args: arguments
  *@envarray: env
  *Return: _exit
  */
