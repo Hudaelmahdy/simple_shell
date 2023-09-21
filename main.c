@@ -27,7 +27,7 @@ int main(int argc, char **args, char **envarray)
 				continue;
 			}
 			if ((!str_cmp(user_command[0], "exit")) && user_command[1] == NULL)
-				_exit_shell(user_command, get_command, _exit);
+				exit_shell(user_command, get_command, _exit);
 			if (!str_cmp(user_command[0], "env"))
 				get_env(envarray);
 			else

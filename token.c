@@ -60,6 +60,7 @@ char *string, int nproc, int cnt)
 	int status;
 	char *form = "%s: %d: %s: not found\n";
 
+	child = fork();
 	if (child == 0)
 	{
 		if (execve(argv[0], argv, envarray) == -1)
@@ -73,13 +74,13 @@ char *string, int nproc, int cnt)
 			}
 		}
 	}
-		else
+	else
+	{
+		wait(&status);
+		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 		{
-			wait(&status);
-			if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-			{
-				return (WEXITSTATUS(status));
-			}
+			return (WEXITSTATUS(status));
+		}
 	}
 	return (0);
 }

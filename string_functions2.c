@@ -33,8 +33,29 @@ char *_strtok(char *str, const char *separator)
 }
 
 /**
+ * _strcspn - computing length of max sigment of the string
+ * @s1: string that will compute the length
+ * @s2: deliminator
+ * Return: length if sigment
+*/
+size_t _strcspn(const char *s1, const char *s2)
+{
+	size_t r = 0;
+	while (*s1)
+	{
+		if (_strchr(s2, *s1))
+		{
+			return (r);
+		}
+		s1++, r++;
+	}
+	return (r);
+}
+
+
+/**
  * _strspn - computing length of max sigment of the str
- * @s1: string that will be compute the length
+ * @s1: string that will compute the length
  * @s2: deliminator
  * Return: length of sigment
 */

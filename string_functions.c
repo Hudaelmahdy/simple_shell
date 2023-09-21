@@ -23,7 +23,7 @@ int str_len(char *s)
  * Return: comparesion
 */
 
-int strn_cmp(char *s1, char *s2)
+int str_cmp(char *s1, char *s2)
 {
 	int i;
 
@@ -46,7 +46,7 @@ int strn_cmp(char *s1, char *s2)
  * Return: comparesion
 */
 
-size_t str_cmp(char *s1, char *s2, size_t n)
+size_t strn_cmp(char *s1, char *s2, size_t n)
 {
 		size_t k, j;
 
@@ -70,7 +70,7 @@ size_t str_cmp(char *s1, char *s2, size_t n)
  * Return: pointer of destination
 */
 
-char str_cpy(char *dest, char *src)
+char *str_cpy(char *dest, char *src)
 {
 	int i = 0;
 

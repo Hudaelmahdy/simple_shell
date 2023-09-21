@@ -31,13 +31,13 @@ void exit_shell(char **argv, char *string, int _exit)
 *Return: integer
 */
 
-char extract_path(char **envarray)
+char *extract_path(char **envarray)
 {
 	size_t envIndex = 0, index = 0, pathLen = 5;
 
 	char *path = NULL;
 
-	for (envIndex = 0; str_cmp(envarray[envIndex], "PATH=", 5); envIndex++)
+	for (envIndex = 0; strn_cmp(envarray[envIndex], "PATH=", 5); envIndex++)
 		;
 	if (envarray[envIndex] == NULL)
 	return (NULL);
