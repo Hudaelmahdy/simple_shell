@@ -54,7 +54,7 @@ int evaluate_path(char **argv, char **envarray)
 	size_t dir_len, cmd_len;
 	struct stat command_stat;
 
-if (stat(*argv, &command_stat) == 0)
+	if (stat(*argv, &command_stat) == 0)
 	{
 		return (-1);
 	}
