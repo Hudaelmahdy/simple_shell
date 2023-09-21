@@ -62,7 +62,7 @@ char *string, int nproc, int cnt)
 
 	if (child == 0)
 	{
-		if (execv(argv[0], argv, envarray) == -1)
+		if (execve(argv[0], argv, envarray) == -1)
 		{
 			fprintf(stderr, form, args[0], nproc, argv[0]);
 			if (!cnt)
